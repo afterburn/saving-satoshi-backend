@@ -18,14 +18,13 @@ app.get("/", async (req, res) => {
 
     await client.begin();
     const result = await client.query("SELECT * FROM accounts");
-    console.log(result.rows);
     await client.commit();
     client.release();
-  } catch (ex) {
-    console.log(ex);
-  }
 
-  res.sendStatus(200);
+    res.status(200).json(result.rows);
+  } catch (ex) {
+    res.status(500).json({ error: ex.message });
+  }
 });
 
 app.listen(port || 3001, () => {

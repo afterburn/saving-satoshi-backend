@@ -1,9 +1,11 @@
-import express from "express";
+import { Router } from "express";
 
 import login from "./login";
+import register from "./register";
 
-const router = express.Router();
+const router = Router();
 
-router.use(login);
+router.use("/login", login);
+router.use("/register", register);
 
 export default router;

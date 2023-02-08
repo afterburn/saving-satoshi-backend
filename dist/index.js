@@ -25,14 +25,13 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const client = yield db.getClient();
         yield client.begin();
         const result = yield client.query("SELECT * FROM accounts");
-        console.log(result.rows);
         yield client.commit();
         client.release();
+        res.status(200).json(result.rows);
     }
     catch (ex) {
-        console.log(ex);
+        res.status(500).json({ error: ex.message });
     }
-    res.sendStatus(200);
 }));
 app.listen(port || 3001, () => {
     console.log(`listening on http://localhost:${port}`);
